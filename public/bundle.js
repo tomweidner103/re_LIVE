@@ -251,13 +251,16 @@ function (_React$Component) {
             switch (_context.prev = _context.next) {
               case 0:
                 ev.preventDefault();
-                console.log('hey');
-                _context.next = 4;
+                _context.next = 3;
                 return _this.props.postMessage(_this.state.body);
 
-              case 4:
+              case 3:
                 _socket__WEBPACK_IMPORTED_MODULE_2__["default"].emit(_this.state.room, {
                   body: _this.state.body
+                });
+
+                _this.setState({
+                  body: ''
                 });
 
               case 5:
@@ -324,7 +327,7 @@ function (_React$Component) {
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         name: "body",
-        value: this.state.message,
+        value: this.state.body,
         onChange: this.onChange
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: this.onSendButtonPressed

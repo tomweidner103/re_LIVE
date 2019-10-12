@@ -8,7 +8,6 @@ const uuid = {
 }
 
 const Message = db.define('message', {
-    id: uuid,
     body: {
         type: Sequelize.TEXT,
     }

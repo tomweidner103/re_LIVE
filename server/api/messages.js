@@ -4,7 +4,7 @@ const {Message} = require('../db')
 router.get('/', async (req,res,next) => {
     try{
         const messages = await Message.findAll()
-        res.json(messages)
+        res.json(messages.sort((a,b) => b.id - a.id))
     }catch(err){
         next(err)
     }

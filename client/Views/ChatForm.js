@@ -21,9 +21,9 @@ class ChatForm extends React.Component {
 
     onSendButtonPressed = async (ev) => {
         ev.preventDefault()
-        console.log('hey')
         await this.props.postMessage(this.state.body)
         socket.emit(this.state.room, {body: this.state.body})
+        this.setState({body: ''})
     }
 
     onChange = (ev) => {
@@ -35,7 +35,7 @@ class ChatForm extends React.Component {
         return (
         <div>
             <form>
-                <input name='body' value={this.state.message} onChange={this.onChange} />
+                <input name='body' value={this.state.body} onChange={this.onChange} />
                 <button onClick={this.onSendButtonPressed}>Button</button>
             </form>
             {
