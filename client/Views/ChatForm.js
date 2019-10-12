@@ -1,36 +1,29 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import axios from 'axios'
 import socket from '../socket'
-import {getMessageThunk} from '../reducers/messages'
+import {postMessageThunk, getMessageThunk} from '../reducers/messages'
 
 class ChatForm extends React.Component {
     constructor(){
         super()
         this.state = {
             room: 'AP',
-            messages: ['one', 'two', 'three'],
             body:""
         }
     }
-
     async componentDidMount(){
-        await this.props.getMessages()
-        await this.props.postMessage({body: 'one'})
-
-
-    }
-
-    onSendButtonPressed = (ev) => {
-        ev.preventDefault()
         socket.on(this.state.room, msg => {
             if(msg) {
-                this.props.postMessage(this.state.body)
+                this.props.getMessages()
             }
         })
-        socket.emit(this.state.room, {body: this.state.body})
+    }
 
-        
+    onSendButtonPressed = async (ev) => {
+        ev.preventDefault()
+        console.log('hey')
+        await this.props.postMessage(this.state.body)
+        socket.emit(this.state.room, {body: this.state.body})
     }
 
     onChange = (ev) => {
@@ -46,9 +39,9 @@ class ChatForm extends React.Component {
                 <button onClick={this.onSendButtonPressed}>Button</button>
             </form>
             {
-                messages.map((message, idx) => {
+                messages.map(message => {
                     return (
-                        <div key={idx}>{message}</div>
+                        <div key={message.id}>{message.body}</div>
                     )
                 })
             }
@@ -58,10 +51,16 @@ class ChatForm extends React.Component {
     }
 }
 
-const mapState = ({messages}) => {messages}
+const mapState = state => {
+    return {
+        messages: state.messages
+    }
+}
 
-const mD = {
+const md = {
+    postMessage: postMessageThunk,
     getMessages: getMessageThunk
 }
 
-export default connect(mapState, mD)(ChatForm)
+
+export default connect(mapState, md)(ChatForm)

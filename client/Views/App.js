@@ -1,23 +1,22 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import Nav from './Nav'
-import ChatForm from './ChatForm'
 import Routes from './Routes'
+import {getMessageThunk} from '../reducers/messages'
 
 class App extends React.Component {
     constructor(){
         super()
     }
 
-    componentDidMount(){
-        // this.props.getMessages()
+    async componentDidMount(){
+        await this.props.getMessages()
         // this.props.getUsers()
     }
     render(){
         return (
             <section>
                 <Nav />
-                {/* <ChatForm /> */}
                 <Routes />
             </section>
         )
@@ -25,8 +24,10 @@ class App extends React.Component {
 
 }
 
-const mapState = ({messages, users}) => {messages, users}
+// const mapState = ({messages, users}) => {messages, users}
 
-// const mapDispatch = {getMessages, getUsers}
+const mapDispatch = {
+    getMessages: getMessageThunk
+}
 
-export default connect(null)(App)
+export default connect(null, mapDispatch)(App)

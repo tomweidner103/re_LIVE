@@ -5,6 +5,7 @@ const path = require("path");
 const { db } = require("./db");
 const PORT = process.env.PORT || 4334;
 const socketio = require("socket.io");
+const {Message, User} = require('../server/db')
 
 const createApp = () => {
   app.use(express.json());
@@ -12,25 +13,7 @@ const createApp = () => {
   app.use(express.urlencoded({ extended: true }));
 
   app.use(express.static(path.join(__dirname, "../public")));
-
-  app.get("/api/messages", async (req, res, next) => {
-    try {
-      const messages = await Message.findAll();
-      res.json(messages);
-    } catch (err) {
-      next(err);
-    }
-  });
-
-  app.post("/api/messages", async (req, res, next) => {
-    try {
-      const message = await Message.create(req.body);
-      res.json(message);
-    } catch (err) {
-      next(err);
-    }
-  });
-
+  app.use('/api', require('./api'))
   app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "../public/index.html"));
   });
@@ -53,7 +36,13 @@ const startListening = () => {
 const syncDb = () => db.sync({ force: true });
 
 async function bootApp() {
-  await syncDb();
+  syncDb()
+  .then(async () => {
+    const u1 = await User.create({name: "Tom"})
+    Message.create({body: "Hi Alex", userId: u1.id})
+  })
+  .catch()
+
   await createApp();
   await startListening();
 }

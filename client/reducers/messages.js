@@ -1,4 +1,4 @@
-import Axios from "axios"
+import axios from "axios"
 
 const GET_MESSAGES = 'GET_MESSAGES'
 const POST_MESSAGE = 'POST_MESSAGE'
@@ -14,12 +14,14 @@ const postMessage = (message) => ({
 })
 
 export const getMessageThunk = () => async dispatch => {
-    const {data} = await Axios.get('/api/messages')
+    const {data} = await axios.get('/api/messages')
+    console.log(data)
     dispatch(getMessages(data))
 }
 
 export const postMessageThunk =(body) => async dispatch => {
-    const {data} =  await Axios.post('/api/messages')
+    console.log(body)
+    const {data} =  await axios.post('/api/messages', {body})
     dispatch(postMessage(data))
 }
 
