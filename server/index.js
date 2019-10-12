@@ -2,10 +2,10 @@ const express = require("express");
 const app = express();
 const volleyball = require("volleyball");
 const path = require("path");
-const { db } = require("./db");
+const db  = require("./db");
 const PORT = process.env.PORT || 4334;
 const socketio = require("socket.io");
-const {Message, User} = require('../server/db')
+const {Message, User} = require('../server/db/models')
 
 const createApp = () => {
   app.use(express.json());

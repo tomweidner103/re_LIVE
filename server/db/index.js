@@ -1,28 +1,6 @@
-const Sequelize = require('sequelize')
-const pkg = require('../../package.json')
-const db = new Sequelize(process.env.DATABASE_URL || `postgres://localhost/${pkg.name}`, {logging: false})
-const uuid = {
-    type: Sequelize.UUID,
-    primaryKey: true,
-    defaultValue: Sequelize.UUIDV4
-}
+const db = require('./db')
 
-const Message = db.define('message', {
-    body: {
-        type: Sequelize.TEXT,
-    }
-})
+// register models
+require('./models')
 
-const User = db.define('user', {
-    id: uuid,
-    name: {
-        type: Sequelize.STRING
-    }
-})
-
-Message.belongsTo(User)
-User.hasMany(Message)
-
-module.exports = {
-    db, User, Message
-}
+module.exports = db
