@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import socket from '../socket'
-import {postMessageThunk, getMessageThunk} from '../reducers/messages'
+import {postMessageThunk, getMessageThunk, deleteMessageThunk} from '../reducers/messages'
 
 class ChatForm extends React.Component {
     constructor(){
@@ -31,6 +31,10 @@ class ChatForm extends React.Component {
     onChange = (ev) => {
         this.setState({[ev.target.name]: ev.target.value})
     }
+    
+    destroy = (id) => {
+        this.props.destroy(id)
+    }
 
     render(){
         const {messages, users} = this.props || []
@@ -49,7 +53,7 @@ class ChatForm extends React.Component {
                         name = {name: 'rando'}
                     }
                     return (
-                        <div key={message.id}>Sender <b>{name.name}</b>: {message.body}</div>
+                        <div key={message.id}>Sender <b>{name.name}</b>: {message.body}<div onClick={this.destroy(message.id)}></div></div>
                     )
                 })
             }
@@ -68,7 +72,8 @@ const mapState = state => {
 
 const md = {
     postMessage: postMessageThunk,
-    getMessages: getMessageThunk
+    getMessages: getMessageThunk,
+    destroy: deleteMessageThunk
 }
 
 
