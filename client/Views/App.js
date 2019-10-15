@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import Nav from './Nav'
 import Routes from './Routes'
 import {getMessageThunk} from '../reducers/messages'
+import { getUsersThunk } from '../reducers/users'
 
 class App extends React.Component {
     constructor(){
@@ -11,7 +12,7 @@ class App extends React.Component {
 
     async componentDidMount(){
         await this.props.getMessages()
-        // this.props.getUsers()
+        await this.props.getUsers()
     }
     render(){
         return (
@@ -27,7 +28,8 @@ class App extends React.Component {
 // const mapState = ({messages, users}) => {messages, users}
 
 const mapDispatch = {
-    getMessages: getMessageThunk
+    getMessages: getMessageThunk,
+    getUsers: getUsersThunk
 }
 
 export default connect(null, mapDispatch)(App)

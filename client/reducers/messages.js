@@ -15,12 +15,10 @@ const postMessage = (message) => ({
 
 export const getMessageThunk = () => async dispatch => {
     const {data} = await axios.get('/api/messages')
-    console.log(data)
     dispatch(getMessages(data))
 }
 
 export const postMessageThunk =(body) => async dispatch => {
-    console.log(body)
     const {data} =  await axios.post('/api/messages', {body})
     dispatch(postMessage(data))
 }

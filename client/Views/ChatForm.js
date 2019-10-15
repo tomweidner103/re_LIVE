@@ -8,7 +8,7 @@ class ChatForm extends React.Component {
         super()
         this.state = {
             room: 'AP',
-            body:""
+            body:"",
         }
     }
     async componentDidMount(){
@@ -21,7 +21,9 @@ class ChatForm extends React.Component {
 
     onSendButtonPressed = async (ev) => {
         ev.preventDefault()
+        //creates msg in db
         await this.props.postMessage(this.state.body)
+        //sends the body to the socket event emitter
         socket.emit(this.state.room, {body: this.state.body})
         this.setState({body: ''})
     }
@@ -31,7 +33,9 @@ class ChatForm extends React.Component {
     }
 
     render(){
-        const {messages} = this.props || []
+        const {messages, users} = this.props || []
+        console.log(users)
+        console.log(messages)
         return (
         <div>
             <form>
@@ -40,8 +44,12 @@ class ChatForm extends React.Component {
             </form>
             {
                 messages.map(message => {
+                    let name = users.find(u => u.id === message.userId) || ''
+                    if(!name.name){
+                        name = {name: 'rando'}
+                    }
                     return (
-                        <div key={message.id}>{message.body}</div>
+                        <div key={message.id}>Sender <b>{name.name}</b>: {message.body}</div>
                     )
                 })
             }
@@ -53,7 +61,8 @@ class ChatForm extends React.Component {
 
 const mapState = state => {
     return {
-        messages: state.messages
+        messages: state.messages,
+        users: state.users
     }
 }
 
