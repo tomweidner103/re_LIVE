@@ -53,7 +53,7 @@ class ChatForm extends React.Component {
                         name = {name: 'rando'}
                     }
                     return (
-                        <div key={message.id}>Sender <b>{name.name}</b>: {message.body}<div onClick={this.destroy(message.id)}></div></div>
+                        <div key={message.id}>Sender <b>{name.name}</b>: {message.body}</div>
                     )
                 })
             }
