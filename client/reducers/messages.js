@@ -2,7 +2,7 @@ import axios from "axios"
 
 const GET_MESSAGES = 'GET_MESSAGES'
 const POST_MESSAGE = 'POST_MESSAGE'
-const DELETE_MESSAGE = "DELETE_MESSAGE'
+const DELETE_MESSAGE = 'DELETE_MESSAGE'
 
 const getMessages = (messages) => ({
     type: GET_MESSAGES,
