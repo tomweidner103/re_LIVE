@@ -40,7 +40,7 @@
     "passport": "^0.4.0",
     "pg": "^7.12.1",
     "sequelize": "^5.19.2",
-    "socket.io": "^2.3.0",
+    "socket.io": "^2.4.0",
     "style-loader": "^1.0.0",
     "volleyball": "^1.5.1"
   }
